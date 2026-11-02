@@ -1,0 +1,8 @@
+Fonts bundled in this folder are licensed under the SIL Open Font License 1.1.
+
+- Fredoka  (c) Milena Brandao, Hafontia — https://fonts.google.com/specimen/Fredoka
+- Nunito   (c) Vernon Adams, Cyreal, Jacques Le Bailly — https://fonts.google.com/specimen/Nunito
+
+Full license text: https://openfontlicense.org/open-font-license-official-text/
+Fonts may be used, studied, modified and redistributed freely as long as they
+are not sold by themselves. This project bundles them unmodified.

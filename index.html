@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#101736">
+<meta name="description" content="KeKe Run — game lari 3D edukasi IPAS Kelas 4 tentang kebutuhan dan keinginan. 1–4 Murid dalam satu layar, bisa dimainkan offline.">
+<title>KeKe Run — Kebutuhan &amp; Keinginan</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="js/fonts.js"></script>
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+<div id="app" class="app">
+
+  <canvas id="stage" class="stage" aria-hidden="true"></canvas>
+  <div id="board" class="board" aria-hidden="true"></div>
+
+  <div id="topbar" class="topbar is-hidden">
+    <div class="level-chip"><span class="lv-dot"></span><span id="level-name">Level 1</span></div>
+    <div class="topbar-actions">
+      <button class="icon-btn" data-action="mute" title="Suara" aria-label="Suara">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn" data-action="pause" title="Jeda" aria-label="Jeda">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.6" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.6" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="countdown" class="countdown is-hidden"><span id="countdown-num">3</span></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div id="screens" class="screens">
+
+    <!-- ============================================= JUDUL -->
+    <section class="screen is-on" id="screen-title" aria-hidden="false">
+      <div class="title-wrap">
+        <div class="logo-lockup">
+          <div class="coin3d" aria-hidden="true">
+            <img class="coin3d-img" src="assets/img/coin.png" alt="">
+            <span class="coin3d-shine"></span>
+          </div>
+          <h1 class="logo logo-3d">
+            <span class="logo-line logo-keke"><span class="logo-word" data-t="KeKe">KeKe</span></span>
+            <span class="logo-line logo-run"><span class="logo-word" data-t="RUN">RUN</span></span>
+          </h1>
+        </div>
+        <p class="tagline">Kebutuhan &amp; Keinginan</p>
+        <button class="meta-pill" data-action="open-goals">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 5.2 5.6.7-4.1 3.9 1.1 5.6L12 15.6 7 18.4l1.1-5.6L4 8.9l5.6-.7z" fill="currentColor"/></svg>
+          <span>IPAS · Kelas 4 · Fase B</span>
+        </button>
+        <div class="title-actions">
+          <button class="btn btn-primary btn-xl" data-action="open-setup">MULAI LARI
+            <svg class="btn-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13M12 5.5l6.5 6.5-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="title-row">
+            <button class="btn btn-ghost" data-action="open-materials">MATERI BELAJAR</button>
+            <button class="btn btn-ghost" data-action="open-board">PAPAN SKOR</button>
+            <button class="btn btn-ghost" data-action="open-help">CARA BERMAIN</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= ATUR PEMAIN -->
+    <section class="screen" id="screen-setup" aria-hidden="true">
+      <div class="panel panel-wide">
+        <header class="panel-head">
+          <h2>Atur Permainan</h2>
+          <button class="icon-btn" data-action="close-setup" aria-label="Tutup">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <div class="setup-grid">
+          <div class="setup-col">
+            <h3 class="label">MODE</h3>
+            <div class="modes" id="mode-list" role="group" aria-label="Mode permainan"></div>
+            <h3 class="label">NAMA MURID</h3>
+            <div class="players" id="player-list"></div>
+            <h3 class="label">PILIH KARAKTER</h3>
+            <div class="avatars avatars-9" id="avatar-list" role="group" aria-label="Pilih karakter"></div>
+          </div>
+          <div class="setup-col setup-preview">
+            <div class="preview-card">
+              <canvas id="preview" class="preview" width="240" height="240"></canvas>
+              <div class="preview-names">
+                <span class="preview-slot" id="preview-slot">MURID 1</span>
+                <strong id="preview-avatar">Si Cepat</strong>
+              </div>
+            </div>
+            <p class="preview-tip">Ketuk karakter untuk melihat dari dekat.</p>
+          </div>
+        </div>
+        <footer class="panel-foot">
+          <p class="foot-note">Tulis nama, lalu ketuk karakter untuk menggantinya.</p>
+          <button class="btn btn-primary btn-lg" data-action="to-confirm">LANJUT
+            <svg class="btn-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13M12 5.5l6.5 6.5-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============================================= KONFIRMASI MULAI -->
+    <section class="screen" id="screen-confirm" aria-hidden="true">
+      <div class="panel panel-wide">
+        <header class="panel-head">
+          <h2 id="confirm-title">Siap Berlari?</h2>
+          <button class="icon-btn" data-action="confirm-back" aria-label="Kembali">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <p class="confirm-lead">Ingat tiga tingkat kebutuhan. Soalmu ada di tengah layar dan berganti setiap poin bertambah.</p>
+        <div class="tier-cards" id="confirm-tiers"></div>
+        <div class="confirm-players" id="confirm-players"></div>
+        <footer class="panel-foot">
+          <button class="btn btn-ghost" data-action="confirm-back">KEMBALI</button>
+          <button class="btn btn-primary btn-lg" data-action="start">MULAI LARI
+            <svg class="btn-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13M12 5.5l6.5 6.5-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============================================= MATERI -->
+    <section class="screen" id="screen-intro" aria-hidden="true">
+      <div class="intro-wrap">
+        <div class="intro-card">
+          <div class="intro-main">
+            <span class="kicker" id="intro-kicker">MATERI 1</span>
+            <h2 id="intro-title">Mana kebutuhan, mana keinginan?</h2>
+            <p class="intro-body" id="intro-body"></p>
+            <div class="chips" id="intro-chips"></div>
+            <p class="note" id="intro-note"></p>
+          </div>
+          <div class="intro-art" id="intro-art"></div>
+        </div>
+        <div class="intro-foot">
+          <div class="dots" id="intro-dots" aria-hidden="true"></div>
+          <div class="intro-actions">
+            <button class="btn btn-ghost" data-action="intro-prev">KEMBALI</button>
+            <button class="btn btn-primary" data-action="intro-next">LANJUT</button>
+            <button class="btn btn-text" data-action="intro-close">TUTUP</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= JEDA -->
+    <section class="screen screen-modal" id="screen-pause" aria-hidden="true">
+      <div class="panel panel-sm">
+        <h2 class="center">Jeda</h2>
+        <p class="center muted">Tarik napas. Lari dilanjutkan saat siap.</p>
+        <div class="stack">
+          <button class="btn btn-primary btn-lg" data-action="resume">LANJUT</button>
+          <button class="btn btn-ghost" data-action="restart">ULANG DARI AWAL</button>
+          <button class="btn btn-text" data-action="quit">KELUAR KE MENU</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= HASIL -->
+    <section class="screen" id="screen-results" aria-hidden="true">
+      <div class="panel panel-wide">
+        <header class="panel-head"><h2 id="results-title">Hasil Lari</h2><span class="pill" id="results-time">00:00</span></header>
+        <div class="results" id="results-list"></div>
+        <footer class="panel-foot">
+          <button class="btn btn-ghost" data-action="open-board">PAPAN SKOR</button>
+          <button class="btn btn-primary btn-lg" data-action="restart">MAIN LAGI</button>
+          <button class="btn btn-text" data-action="quit">MENU</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============================================= PAPAN SKOR -->
+    <section class="screen" id="screen-board" aria-hidden="true">
+      <div class="panel panel-wide">
+        <header class="panel-head">
+          <h2>Papan Skor</h2>
+          <button class="icon-btn" data-action="close-board" aria-label="Tutup">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <div class="table-wrap">
+          <table class="scoreboard">
+            <thead><tr><th>#</th><th>Murid</th><th>Mode</th><th>Poin</th><th>Waktu</th><th>Level</th></tr></thead>
+            <tbody id="board-body"></tbody>
+          </table>
+          <p class="empty" id="board-empty">Belum ada skor. Ayo berlari dulu!</p>
+        </div>
+        <footer class="panel-foot">
+          <button class="btn btn-danger" data-action="reset-scores">HAPUS SEMUA SKOR</button>
+          <span class="foot-note">Skor disimpan di perangkat ini saja.</span>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============================================= CARA BERMAIN -->
+    <section class="screen" id="screen-help" aria-hidden="true">
+      <div class="panel panel-wide">
+        <header class="panel-head">
+          <h2>Cara Bermain</h2>
+          <button class="icon-btn" data-action="close-help" aria-label="Tutup">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <div class="help-grid" id="help-grid"></div>
+        <footer class="panel-foot help-foot">
+          <span class="credit">Pengembang Andika Faris</span>
+          <button class="btn btn-primary" data-action="close-help">MENGERTI</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============================================= TUJUAN PEMBELAJARAN -->
+    <section class="screen screen-modal" id="screen-goals" aria-hidden="true">
+      <div class="panel panel-sm">
+        <header class="panel-head">
+          <h2>Tujuan Pembelajaran</h2>
+          <button class="icon-btn" data-action="close-goals" aria-label="Tutup">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <p class="goals-text" id="goals-text"></p>
+        <footer class="panel-foot">
+          <span class="credit">Pengembang Andika Faris</span>
+          <button class="btn btn-primary" data-action="close-goals">MENGERTI</button>
+        </footer>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="sr-only" id="sr" aria-live="polite"></p>
+  <noscript><p class="noscript">Aktifkan JavaScript untuk memainkan KeKe Run.</p></noscript>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/art.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/models.js"></script>
+<script src="js/runner.js"></script>
+<script src="js/world.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
