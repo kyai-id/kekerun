@@ -1,42 +1,12 @@
-{
-  "name": "KeKe Run — Kebutuhan & Keinginan",
-  "short_name": "KeKe Run",
-  "description": "Game lari 3D edukasi IPAS Kelas 4: bedakan kebutuhan primer, sekunder, tersier dan kenali peran uang. Untuk 1–4 Murid dalam satu layar, bisa dimainkan offline.",
-  "lang": "id",
-  "dir": "ltr",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "display_override": [
-    "fullscreen",
-    "standalone"
-  ],
-  "orientation": "any",
-  "background_color": "#0b1029",
-  "theme_color": "#101736",
-  "categories": [
-    "education",
-    "games",
-    "kids"
-  ],
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
-}
+self.addEventListener('install', function () {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function (event) {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', function () {
+  // PWA / service worker dinonaktifkan agar aplikasi tetap terbuka dengan normal
+  // saat dibuka langsung dari index.html atau publish tanpa cache yang rusak.
+});
