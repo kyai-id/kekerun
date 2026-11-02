@@ -8,10 +8,16 @@
   <title>KeKe Run — Kebutuhan &amp; Keinginan</title>
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="app.css">
-  <script src="fonts.js" defer></script>
-  <script src="three.min.js" defer></script>
-  <script src="game.js" defer></script>
-  <script src="game-fix.js" defer></script>
+  <script src="vendor/three.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/models.js"></script>
+  <script src="js/runner.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+  <script src="game-fix.js"></script>
 </head>
 <body>
   <div id="app" class="app">
@@ -90,6 +96,8 @@
               <div class="modes" id="mode-list" role="group" aria-label="Mode permainan"></div>
               <h3 class="label">Nama Murid</h3>
               <div class="players" id="player-list"></div>
+              <h3 class="label">Pilih Karakter</h3>
+              <div class="avatars avatars-9" id="avatar-list" role="group" aria-label="Pilih karakter"></div>
             </div>
             <div class="setup-col setup-preview">
               <div class="preview-card">
@@ -134,18 +142,9 @@
             </button>
           </header>
           <div class="goal-list">
-            <div class="goal-item">
-              <span class="goal-badge">1</span>
-              <p>Pilih benda yang termasuk kebutuhan utama sesuai kebutuhan hidup.</p>
-            </div>
-            <div class="goal-item">
-              <span class="goal-badge">2</span>
-              <p>Hindari benda yang hanya kebutuhan tambahan atau hiburan.</p>
-            </div>
-            <div class="goal-item">
-              <span class="goal-badge">3</span>
-              <p>Jaga nyawa, kumpulkan poin, dan selesaikan level dengan cerdas.</p>
-            </div>
+            <div class="goal-item"><span class="goal-badge">1</span><p>Pilih benda yang termasuk kebutuhan utama sesuai kebutuhan hidup.</p></div>
+            <div class="goal-item"><span class="goal-badge">2</span><p>Hindari benda yang hanya kebutuhan tambahan atau hiburan.</p></div>
+            <div class="goal-item"><span class="goal-badge">3</span><p>Jaga nyawa, kumpulkan poin, dan selesaikan level dengan cerdas.</p></div>
           </div>
         </div>
       </section>
@@ -191,18 +190,9 @@
             </button>
           </header>
           <div class="help-wrap">
-            <div class="step-box">
-              <span class="step-num">1</span>
-              <p>Tekan tombol kiri atau kanan untuk bergerak.</p>
-            </div>
-            <div class="step-box">
-              <span class="step-num">2</span>
-              <p>Tekan tombol lompat saat benda atau rintangan datang.</p>
-            </div>
-            <div class="step-box">
-              <span class="step-num">3</span>
-              <p>Pilih jawaban yang benar untuk Kebutuhan dan Keinginan agar poinmu bertambah.</p>
-            </div>
+            <div class="step-box"><span class="step-num">1</span><p>Tekan tombol kiri atau kanan untuk bergerak.</p></div>
+            <div class="step-box"><span class="step-num">2</span><p>Tekan tombol lompat saat benda atau rintangan datang.</p></div>
+            <div class="step-box"><span class="step-num">3</span><p>Pilih jawaban yang benar untuk Kebutuhan dan Keinginan agar poinmu bertambah.</p></div>
           </div>
           <div class="controls-note">
             <span>Kontrol:</span>
